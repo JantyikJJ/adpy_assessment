@@ -5,37 +5,42 @@ import json
 
 class Settings:
     def __init__(self):
-        self.location = "config.json"
-
-        display = Display()
+        self._location = "config.json"
 
         self.width = 1280
         self.height = 720
 
-        self.x = (display.screen_width - self.width) / 2
-        self.y = (display.screen_height - self.height) / 2
+        self.__x__ = 0
+        self.__y__ = 0
+        self.center()
 
     def load(self):
-        if path.exists(self.location):
-            file = open(self.location, "r")
+        if path.exists(self._location):
+            file = open(self._location, "r")
             content = file.read()
             file.close()
             cfg = json.loads(content)
 
-            print(cfg)
-
             self.width = cfg['width']
             self.height = cfg['height']
-            self.x = cfg['x']
-            self.y = cfg['y']
+
+            self.center()
         else:
             self.save()
 
+    def center(self):
+        display = Display()
+
+        self.__x__ = (display.screen_width - self.width) / 2
+        self.__y__ = (display.screen_height - self.height) / 2
+
     def save(self):
         content = self.to_json()
-        file = open(self.location, "w")
+        file = open(self._location, "w")
         file.write(content)
         file.close()
 
     def to_json(self):
-        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+        filtered = dict(filter(lambda elem: not elem[0].startswith("_"), self.__dict__.items()))
+        print(filtered)
+        return json.dumps(filtered, default=lambda o: o, sort_keys=True, indent=4)

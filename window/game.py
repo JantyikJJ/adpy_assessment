@@ -12,8 +12,8 @@ class Game:
         dpg.create_viewport(title='Jumpy Junkie',
                             width=self.settings.width,
                             height=self.settings.height,
-                            x_pos=int(self.settings.x),
-                            y_pos=int(self.settings.y))
+                            x_pos=int(self.settings.__x__),
+                            y_pos=int(self.settings.__y__))
         dpg.setup_dearpygui()
 
         self.fps = Fps(lambda value: print(value))
