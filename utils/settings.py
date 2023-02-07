@@ -1,4 +1,4 @@
-from display import Display
+from utils.display import Display
 import os.path as path
 import json
 
@@ -21,16 +21,21 @@ class Settings:
             content = file.read()
             file.close()
             cfg = json.loads(content)
-            self.width = cfg.width
-            self.height = cfg.height
-            self.x = cfg.x
-            self.y = cfg.y
+
+            print(cfg)
+
+            self.width = cfg['width']
+            self.height = cfg['height']
+            self.x = cfg['x']
+            self.y = cfg['y']
         else:
             self.save()
 
     def save(self):
-        content = json.dumps(self)
+        content = self.to_json()
         file = open(self.location, "w")
         file.write(content)
         file.close()
 
+    def to_json(self):
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
