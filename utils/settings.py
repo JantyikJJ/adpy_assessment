@@ -1,17 +1,6 @@
-from datetime import datetime
+from display import Display
 import os.path as path
-import tkinter as tk
 import json
-
-
-class Display:
-    def __init__(self):
-        root = tk.Tk()
-
-        self.screen_width = root.winfo_screenwidth()
-        self.screen_height = root.winfo_screenheight()
-
-        root.destroy()
 
 
 class Settings:
@@ -45,19 +34,3 @@ class Settings:
         file.write(content)
         file.close()
 
-
-class Fps:
-    def __init__(self, callback):
-        self.cb = callback
-        self.counter = 0
-        self.date = datetime.now()
-
-    def update(self):
-        sub = datetime.now() - self.date
-        if sub.seconds >= 1:
-            self.date = datetime.now()
-            self.cb(self.counter)
-            self.counter = 0
-            return
-
-        self.counter = self.counter + 1
