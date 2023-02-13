@@ -9,7 +9,7 @@ class Game:
         self.settings.load()
 
         dpg.create_context()
-        dpg.create_viewport(title='Jumpy Junkie',
+        dpg.create_viewport(title='Fly Junkie',
                             width=self.settings.width,
                             height=self.settings.height,
                             x_pos=int(self.settings.__x__),
