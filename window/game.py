@@ -19,9 +19,6 @@ class Game:
         self.fps = Fps(lambda value: print(value))
 
     def show(self):
-        with dpg.window(label="Example Window"):
-            dpg.add_text("Hello, world")
-
         dpg.show_viewport()
         while dpg.is_dearpygui_running():
             self.fps.update()
