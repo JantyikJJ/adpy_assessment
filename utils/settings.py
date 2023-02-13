@@ -21,8 +21,8 @@ class Settings:
             file.close()
             cfg = json.loads(content)
 
-            self.width = cfg['width']
-            self.height = cfg['height']
+            for item in cfg.keys():
+                self.__dict__[item] = cfg[item]
 
             self.center()
         else:
