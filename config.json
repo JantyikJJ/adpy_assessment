@@ -1,4 +1,9 @@
 {
-    "height": 720,
-    "width": 1280
+    "fps": 144,
+    "height": 800,
+    "scores": [
+        13582
+    ],
+    "volume": 0.8,
+    "width": 600
 }

@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Slow",
+    "spawn_rates": {
+      "fruit_low": 250,
+      "fruit_high": 350,
+      "enemy_low": 150,
+      "enemy_high": 200
+    },
+    "speed_degradation": {
+      "offset": 1000,
+      "amount": 1,
+      "rate": 200
+    }
+  },
+  {
+    "name": "Medium",
+    "spawn_rates": {
+      "fruit_low": 350,
+      "fruit_high": 450,
+      "enemy_low": 100,
+      "enemy_high": 150
+    },
+    "speed_degradation": {
+      "offset": 1000,
+      "amount": 1,
+      "rate": 100
+    }
+  },
+  {
+    "name": "Hell",
+    "spawn_rates": {
+      "fruit_low": 100,
+      "fruit_high": 500,
+      "enemy_low": 50,
+      "enemy_high": 100
+    },
+    "speed_degradation": {
+      "offset": 800,
+      "amount": 1,
+      "rate": 50
+    }
+  }
+]

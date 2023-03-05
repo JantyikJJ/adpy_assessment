@@ -1,4 +1,5 @@
 from utils.display import Display
+from utils.utilities import Utilities
 import os.path as path
 import json
 
@@ -9,17 +10,21 @@ class Settings:
 
         self.width = 1280
         self.height = 720
+        self.fps = 144
+        self.volume = 0.8
+        self.scores = []
 
         self.__x__ = 0
         self.__y__ = 0
+        self.__speed__ = 10
+        self.__title__ = "Jumpie Junkie"
+        self.__screen_center_width__ = self.width / 2
+        self.__screen_center_height__ = self.height / 2
         self.center()
 
     def load(self):
         if path.exists(self._location):
-            file = open(self._location, "r")
-            content = file.read()
-            file.close()
-            cfg = json.loads(content)
+            cfg = Utilities.load_file(self._location)
 
             for item in cfg.keys():
                 self.__dict__[item] = cfg[item]
@@ -27,6 +32,11 @@ class Settings:
             self.center()
         else:
             self.save()
+
+    def add_score(self, score):
+        self.scores.append(score)
+        self.scores.sort()
+        self.save()
 
     def center(self):
         display = Display()

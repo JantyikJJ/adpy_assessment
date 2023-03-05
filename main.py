@@ -1,4 +1,4 @@
 from window.game import Game
 
 game = Game()
-game.show()
+game.main_game_loop()

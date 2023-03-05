@@ -1,0 +1,30 @@
+{
+  "fruit": [
+    {
+      "name": "apple.png",
+      "speed_impact": 1
+    },
+    {
+      "name": "banana.png",
+      "speed_impact": 1
+    },
+    {
+      "name": "pine.png",
+      "speed_impact": 1
+    }
+  ],
+  "enemy": [
+    {
+      "name": "nail.png",
+      "speed_impact": -1
+    },
+    {
+      "name": "phone.png",
+      "speed_impact": -1
+    },
+    {
+      "name": "hammer.png",
+      "speed_impact": -1
+    }
+  ]
+}

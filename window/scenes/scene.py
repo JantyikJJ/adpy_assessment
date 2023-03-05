@@ -1,17 +1,20 @@
+from abc import abstractmethod
+
+
 class Scene:
-    def __init__(self, name, config):
-        self.objects = []
-        self.width = config.width
-        self.height = config.height
-        self.name = name
+    def __init__(self, game):
+        self.entities = []
+        self.scroll = 0
+        self.game = game
 
-    def apply(self):
-        for item in self.objects:
-            item.pack()
+        self.game_field = False
 
-    def add_item(self, item):
-        self.objects.append(item)
-        return len(self.objects) - 1
+    @abstractmethod
+    def update(self):
+        pass
 
-    def remove_item(self, item):
-        self.objects.remove(item)
+    def add_entity(self, entity):
+        self.entities.append(entity)
+
+    def remove_entity(self, entity):
+        self.entities.remove(entity)
