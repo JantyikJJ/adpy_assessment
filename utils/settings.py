@@ -45,7 +45,7 @@ class Settings:
 
     def add_score(self, score):
         self.scores.append(score)
-        self.scores.sort()
+        self.scores.sort(reverse=True)
         self.save()
 
     def center(self):
