@@ -10,7 +10,7 @@ class Button(Renderable):
         self.manager = manager
         self.text = text
         self.font = manager.font
-        self.click = click
+        self.click_event = click
         self.hovered = False
 
         self.x = x
@@ -30,7 +30,12 @@ class Button(Renderable):
         self._text_pos = (x + ((width - self.rendered_text_rect.width) / 2),
                           y + ((height - self.rendered_text_rect.height) / 2))
 
-        print(self.__dict__)
+    def update_text(self, text):
+        self.rendered_text = self.font.render(text, True, (255, 255, 255))
+        self.rendered_text_rect = self.rendered_text.get_rect()
+
+        self._text_pos = (self.x + ((self.width - self.rendered_text_rect.width) / 2),
+                          self.y + ((self.height - self.rendered_text_rect.height) / 2))
 
     def update_rect(self, x, y, width, height):
         self.x = x
@@ -50,6 +55,9 @@ class Button(Renderable):
     def update_hovered(self, x, y):
         self.hovered = self.x <= x <= self.x_right and self.y <= y <= self.y_bottom
         return self.hovered
+
+    def click(self):
+        self.click_event(self)
 
     def update(self):
         pass

@@ -17,7 +17,6 @@ class Game:
     def __init__(self):
         self.settings = Settings()
         self.settings.load()
-        self.font_color = (1, 1, 1)
         self.clock = pygame.time.Clock()
         self.modifier = 1
 
@@ -26,7 +25,7 @@ class Game:
         os.environ['SDL_VIDEO_WINDOW_POS'] = '%i,%i' % (self.settings.__x__, self.settings.__y__)
         os.environ['SDL_VIDEO_CENTERED'] = '0'
 
-        self.difficulty = Difficulty()
+        self.difficulty = Difficulty(self.settings)
 
         pygame.init()
         pygame.display.set_caption(self.settings.__title__)
@@ -61,8 +60,10 @@ class Game:
                 if type(self.current_scene).__name__ == "Main":
                     self.settings.add_score(int(-self.current_scene.scroll))
                     self.current_scene = Menu(self)
+                    self.player.scene = self.current_scene
                 else:
                     self.current_scene = Main(self)
+                    self.player.scene = self.current_scene
 
             self.background.set_speed(self.player.speed * self.modifier)
 

@@ -12,6 +12,7 @@ class Settings:
         self.height = 720
         self.fps = 144
         self.volume = 0.8
+        self.difficulty = 0
         self.scores = []
 
         self.__x__ = 0
@@ -20,6 +21,15 @@ class Settings:
         self.__title__ = "Jumpie Junkie"
         self.__screen_center_width__ = self.width / 2
         self.__screen_center_height__ = self.height / 2
+        self.__fps_options__ = [30, 60, 90, 120, 144, 240, 960]
+        self.__fps_options_len__ = len(self.__fps_options__)
+
+        try:
+            self.__current_fps__ = self.__fps_options__.index(self.fps)
+        except ValueError:
+            self.__current_fps__ = 4
+            self.fps = self.__fps_options__[self.__current_fps__]
+
         self.center()
 
     def load(self):
@@ -52,5 +62,4 @@ class Settings:
 
     def to_json(self):
         filtered = dict(filter(lambda elem: not elem[0].startswith("_"), self.__dict__.items()))
-        print(filtered)
         return json.dumps(filtered, default=lambda o: o, sort_keys=True, indent=4)

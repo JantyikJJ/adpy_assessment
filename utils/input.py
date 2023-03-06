@@ -30,14 +30,12 @@ class Input:
                     self.game.buttons.selected_button -= 1
                     if self.game.buttons.selected_button < 0:
                         self.game.buttons.selected_button = self.game.buttons.button_count - 1
+                elif event.key == pygame.K_RETURN and self.game.buttons.button_count > 0:
+                    self.game.buttons.buttons[self.game.buttons.selected_button].click()
 
         # Get keyboard and mouse inputs
         keys = pygame.key.get_pressed()
         mouse = pygame.mouse.get_pos()
-
-        # Check for "Enter" key input and count it as a click
-        if keys[pygame.K_RETURN] and self.game.buttons.button_count > 0:
-            self.game.buttons.buttons[self.game.buttons.selected_button].click()
 
         # Go through buttons and update hover / handle clicking
         for index, button in enumerate(self.game.buttons.buttons):
