@@ -1,7 +1,7 @@
 from models.renderable import Renderable
 
-from models.text.animations.NoAnimation import NoAnimation
-from models.text.animations.SwingAnimation import SwingAnimation
+from models.text.animations.no_animation import NoAnimation
+from models.text.animations.swing_animation import SwingAnimation
 
 import pygame
 

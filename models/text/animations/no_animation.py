@@ -1,4 +1,4 @@
-from models.text.animations.Animation import Animation
+from models.text.animations.animation import Animation
 
 
 class NoAnimation(Animation):
