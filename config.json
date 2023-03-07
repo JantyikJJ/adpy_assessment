@@ -1,6 +1,6 @@
 {
-    "difficulty": 2,
-    "fps": 144,
+    "difficulty": 0,
+    "fps": 60,
     "height": 800,
     "scores": [
         4350,

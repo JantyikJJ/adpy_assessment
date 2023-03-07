@@ -9,6 +9,8 @@ class Menu(Scene):
         super().__init__(game)
         self.keep_scene = True
 
+        # Init game title label
+
         self.text = Text("assets/joystix.ttf", int(72 * game.scale), game, self.game.settings.__title__,
                          (255, 255, 255), "swing").center(y_offset=int(-550 * game.scale))
 
@@ -33,33 +35,42 @@ class Menu(Scene):
             self.keep_scene = True
             return False
 
+    # Generate menu buttons
     def menu_buttons(self, _=None):
+        # Clear rendered scores and purge previous buttons
         self.score_texts.clear()
         self.game.buttons.purge_buttons()
 
+        # Create main menu buttons
         self.game.buttons.create_button("Start", self.start_clicked)
         self.game.buttons.create_button("Settings", self.settings_clicked)
         self.game.buttons.create_button("Scores", self.scores_clicked)
         self.game.buttons.create_button("Quit", self.quit_clicked)
 
-    # Default screen buttons
+    # Main -> Start clicked
     def start_clicked(self, _=None):
+        # Purge buttons and indicate scene change
         self.game.buttons.purge_buttons()
 
         self.keep_scene = False
 
+    # Main -> Settings clicked
     def settings_clicked(self, _=None):
+        # Purge buttons
         self.game.buttons.purge_buttons()
-
+        # Create buttons for volume, difficulty and fps changes, also back button to go back to the main menu
         self.game.buttons.create_button(f"Volume: {int(self.game.settings.volume * 100)}%", self.volume_clicked)
         self.game.buttons.create_button(f"Difficulty: {self.game.difficulty.current_difficulty['name']}",
                                         self.iter_diff)
         self.game.buttons.create_button(f"FPS: {self.game.settings.fps}", self.iter_fps)
         self.game.buttons.create_button("Back", self.menu_buttons)
 
+    # Main -> Scores clicked
     def scores_clicked(self, _=None):
+        # Purge buttons
         self.game.buttons.purge_buttons()
 
+        # Create button for going back to the main menu and create Text entities for scores
         back_button = self.game.buttons.create_button("Back", self.menu_buttons)
         offset = back_button.y_bottom + self.game.buttons.button_gap
 
@@ -71,14 +82,17 @@ class Menu(Scene):
 
         self.generate_scores(scores, offset)
 
+    # Main -> Quit clicked
     def quit_clicked(self, _=None):
+        # Quit game
         self.game.buttons.purge_buttons()
 
         pygame.quit()
         quit()
 
-    # Settings buttons
+    # Settings -> Volume clicked
     def volume_clicked(self, button):
+        # Iterate volume and update text, save settings and set main volume
         self.game.settings.volume -= 0.1
         if self.game.settings.volume < 0:
             self.game.settings.volume = 1
@@ -88,7 +102,9 @@ class Menu(Scene):
         self.game.settings.save()
         pygame.mixer.music.set_volume(self.game.settings.volume)
 
+    # Settings -> Difficulty clicked
     def iter_diff(self, button):
+        # Iterate difficulty and set it as the current one, then update the button and save the settings
         self.game.settings.difficulty = (self.game.settings.difficulty + 1) % len(self.game.difficulty.difficulties)
         self.game.difficulty.set_difficulty(self.game.settings.difficulty)
 
@@ -96,7 +112,9 @@ class Menu(Scene):
 
         self.game.settings.save()
 
+    # Settings -> FPS clicked
     def iter_fps(self, button):
+        # Update FPS and set it as the current one, then update the button and save the settings
         self.game.settings.__current_fps__ = (self.game.settings.__current_fps__ + 1)\
                                              % self.game.settings.__fps_options_len__
         self.game.settings.fps = self.game.settings.__fps_options__[self.game.settings.__current_fps__]
@@ -111,9 +129,9 @@ class Menu(Scene):
         prev_offset = y_offset
 
         for score in scores:
-            text = Text("assets/joystix.ttf", 48 * self.game.modifier, self.game, score, (255, 255, 255))
+            text = Text("assets/joystix.ttf", 22 * self.game.modifier, self.game, score, (255, 255, 255))
             text.center(0, 0)
             text.text_rect.y = prev_offset
-            prev_offset += text.text_rect.height + 20 * self.game.modifier
+            prev_offset += text.text_rect.height + 4 * self.game.modifier
 
             self.score_texts.append(text)
