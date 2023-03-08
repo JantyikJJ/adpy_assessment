@@ -7,12 +7,15 @@ class Main(Scene):
     def __init__(self, game):
         super().__init__(game)
         self.game_field = True
+
+        # Initialize entity generator
         self.entity_generator = EntityGenerator(self)
 
         # Init stat display considering the scale of the game to keep the game looking uniform in all sizes.
         self.font_size = int(52 * game.scale)
         self.padding = int(20 * game.scale)
 
+        # Set scheme for Score and Speed labels in the top right corner, considering the scale of the game field.
         self.score = Text("assets/joystix.ttf", self.font_size, game, "Score:0",
                           (255, 255, 255), x=self.padding, y=self.padding, pos='topleft')
         self.speed = Text("assets/joystix.ttf", self.font_size, game, "Speed:0m/s",

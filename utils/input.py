@@ -3,6 +3,7 @@ import pygame
 
 class Input:
     def __init__(self, player, game, settings):
+        # Initialize default class variables and assign necessary values.
         self.player = player
         self.settings = settings
         self.game = game
@@ -23,6 +24,8 @@ class Input:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 self.mouse_pressed = True
             if event.type == pygame.KEYDOWN:
+                # If Up or Down arrow is pressed, change the currently selected button (if there are any)
+                # This is to support mouse-less input.
                 if event.key == pygame.K_DOWN:
                     self.game.buttons.selected_button = (self.game.buttons.selected_button + 1)\
                                                         % self.game.buttons.button_count
@@ -31,6 +34,7 @@ class Input:
                     if self.game.buttons.selected_button < 0:
                         self.game.buttons.selected_button = self.game.buttons.button_count - 1
                 elif event.key == pygame.K_RETURN and self.game.buttons.button_count > 0:
+                    # If enter is pressed, and there are any buttons, simulate click to the currently selected button.
                     self.game.buttons.buttons[self.game.buttons.selected_button].click()
 
         # Get keyboard and mouse inputs
@@ -50,6 +54,8 @@ class Input:
             quit()
 
         # Update player position
+        # Consider delta time to make move speed invariant amongst different refresh rates.
+        # If the player hits the left or right window boundaries, prevent moving out of bounds (and the tilt animation)
         if keys[pygame.K_a] or keys[pygame.K_LEFT]:
             self.player.x -= self.settings.__speed__ * self.game.modifier
             if self.player.x < self.min_x:

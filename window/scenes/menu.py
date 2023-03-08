@@ -9,26 +9,32 @@ class Menu(Scene):
         super().__init__(game)
         self.keep_scene = True
 
-        # Init game title label
+        # Init game title label.
 
         self.text = Text("assets/joystix.ttf", int(72 * game.scale), game, self.game.settings.__title__,
                          (255, 255, 255), "swing").center(y_offset=int(-550 * game.scale))
 
         self.score_texts = []
 
+        # Set initial layout to be the default menu buttons
         self.menu_buttons()
 
     def update(self):
+        # Update text animation, render player, then render the text (so it overlaps for sure).
         self.text.update()
         self.game.player.render()
         self.text.render()
 
+        # Render score texts (if there are any).
         for text in self.score_texts:
             text.update()
             text.render()
 
+        # Render buttons (if there are any).
         self.game.buttons.render()
 
+        # If the play button is clicked, keep scene is set to false, indicating the need of scene switching.
+        # However, if the implementation keeps the current instance of the menu, leaving it on False would cause bugs.
         if self.keep_scene:
             return True
         else:
@@ -67,19 +73,21 @@ class Menu(Scene):
 
     # Main -> Scores clicked
     def scores_clicked(self, _=None):
-        # Purge buttons
+        # Purge buttons.
         self.game.buttons.purge_buttons()
 
-        # Create button for going back to the main menu and create Text entities for scores
+        # Create button for going back to the main menu and create Text entities for scores.
         back_button = self.game.buttons.create_button("Back", self.menu_buttons)
         offset = back_button.y_bottom + self.game.buttons.button_gap
 
+        # Get first 10 scores. If there are not any, add "No scores!" predefined text.
         scores = self.game.settings.scores[:10]
         if len(scores) == 0:
             scores.append("No scores!")
         else:
             scores = map(lambda item: str(item), scores)
 
+        # Generate score labels under each other, and add them to the score label list.
         self.generate_scores(scores, offset)
 
     # Main -> Quit clicked
@@ -128,10 +136,12 @@ class Menu(Scene):
     def generate_scores(self, scores, y_offset):
         prev_offset = y_offset
 
+        # Iterate through the scores, create new labels for them and position them under each other.
+        # Eventually, add them to the score texts list which is rendered in the update method.
         for score in scores:
-            text = Text("assets/joystix.ttf", 22 * self.game.modifier, self.game, score, (255, 255, 255))
+            text = Text("assets/joystix.ttf", 36 * self.game.scale, self.game, score, (255, 255, 255))
             text.center(0, 0)
             text.text_rect.y = prev_offset
-            prev_offset += text.text_rect.height + 4 * self.game.modifier
+            prev_offset += text.text_rect.height + 8 * self.game.scale
 
             self.score_texts.append(text)

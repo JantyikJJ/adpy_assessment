@@ -3,6 +3,7 @@ from abc import abstractmethod
 
 class Scene:
     def __init__(self, game):
+        # Define some essential variables common for each scene
         self.entities = []
         self.scroll = 0
         self.game = game
